@@ -60,7 +60,30 @@ function getChannelFlow() {
 function getCurrentChannel() {
     const utmSource = parsedUrl.searchParams.utm_source;
     const utmMedium = parsedUrl.searchParams.utm_medium;
+    
+    //Google Ads : gclid, gclsrc, wbraid and gbraid
+    const googleAdsgclid = parsedUrl.searchParams.gclid;
+    const googleAdsgclsrc = parsedUrl.searchParams.gclsrc;
+    const googleAdswbraid = parsedUrl.searchParams.wbraid;
+    const googleAdsgbraid = parsedUrl.searchParams.gbraid;
+    
+    //Google DoubleClick : dclid
+    const googleDoubleClickdclid = parsedUrl.searchParams.dclid;
+      
+    //Bing Ads : msclkid
+    const bingAdsmsclkid = parsedUrl.searchParams.msclkid;
+    
+    //Facebook : fbclid
+    const facebookIdentifierfbclid = parsedUrl.searchParams.fbclid;
 
+    if (googleAdsgclid || googleAdsgclsrc || googleAdswbraid || googleAdsgbraid || googleDoubleClickdclid || bingAdsmsclkid) {
+        return (bingAdsmsclkid ? 'bing' : 'google') + '/' + ('paid');
+    }
+    
+    if (facebookIdentifierfbclid) {
+        return ('facebook') + '/' + ('paid');
+    }
+    
     if (utmSource || utmMedium) {
         return (utmSource ? utmSource : 'direct') + '/' + (utmMedium ? utmMedium : 'none');
     }
